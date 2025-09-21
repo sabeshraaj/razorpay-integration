@@ -1,153 +1,152 @@
-Razorpay Integration
+# Razorpay Integration Demo
 
 This repository is a demo full-stack application demonstrating the integration of the Razorpay payment gateway. The backend is built with Node.js and Express, while the frontend uses React. Users can select products, make payments via Razorpay, and receive confirmation after successful payment.
 
-Features
+## Features
 
-Product listing on the frontend with prices and images.
+- **Product Listing**: Display products on the frontend with prices and images
+- **Checkout Flow**: Seamless checkout experience using Razorpay
+- **Order Management**: Backend order creation and management
+- **API Key Integration**: Backend provides Razorpay API key to the frontend
+- **Security**: Payment signature verification for secure transactions
+- **Success Page**: Redirect to success page with reference ID after payment completion
 
-Checkout flow using Razorpay, with orders created via the backend.
+## Project Structure
 
-Backend provides the Razorpay API key to the frontend.
+```
+razorpay-integration/
+├── backend/
+│   ├── controllers/
+│   │   └── productController.js      # Handles order creation, payment verification
+│   ├── routes/
+│   │   └── productRoutes.js          # Defines API endpoints for payments
+│   ├── config/
+│   │   └── config.env                # Environment variables including Razorpay API keys
+│   ├── server.js                     # Initializes Razorpay instance and starts server
+│   ├── app.js                        # Configures Express app with routes and middleware
+│   ├── package.json
+│   └── package-lock.json
+├── frontend/
+│   ├── components/
+│   │   ├── Products.jsx              # Displays products and handles checkout
+│   │   └── PaymentSuccess.jsx        # Shows payment success confirmation
+│   ├── data.js                       # Static product data
+│   ├── App.jsx                       # Sets up React Router for navigation
+│   ├── main.jsx                      # Application entry point
+│   ├── package.json
+│   └── package-lock.json
+├── .gitignore
+└── README.md
+```
 
-Payment signature verification for security.
+## Prerequisites
 
-On successful payment, users are redirected to a success page showing a reference ID.
+- **Node.js** v14 or higher
+- **npm** or **yarn**
+- **Internet connection**
+- **Razorpay account** to generate API keys
 
-Project Structure
+## Setup Instructions
 
-The project is organized as follows:
+### 1. Clone the Repository
 
-backend/: Node.js / Express backend
-
-controllers/productController.js: Handles order creation, payment verification.
-
-routes/productRoutes.js: Defines API endpoints for payments.
-
-config/config.env: Environment variables including Razorpay API keys.
-
-server.js: Initializes Razorpay instance and starts the server.
-
-app.js: Configures Express app with routes and middleware.
-
-frontend/: React frontend
-
-components/Products.jsx: Displays products and handles checkout.
-
-components/PaymentSuccess.jsx: Shows payment success confirmation.
-
-data.js: Static product data.
-
-App.jsx: Sets up React Router for navigation.
-
-main.jsx: Application entry point.
-
-Other files include .gitignore, package.json, and package-lock.json.
-
-Prerequisites
-
-Node.js v14 or higher
-
-npm or yarn
-
-Internet connection
-
-Razorpay account to generate API keys
-
-Setup Instructions
-
-Clone the repository:
-
+```bash
 git clone https://github.com/sabeshraaj/razorpay-integration.git
 cd razorpay-integration
+```
 
-Backend setup:
+### 2. Backend Setup
 
-Navigate to the backend folder: cd backend
+Navigate to the backend folder:
+```bash
+cd backend
+```
 
-Install dependencies: npm install
+Install dependencies:
+```bash
+npm install
+```
 
-Create a file backend/config/config.env with the following:
-
+Create environment configuration file `backend/config/config.env`:
+```env
 PORT=3000
-
 RAZORPAY_API_KEY=your_test_key_id
-
 RAZORPAY_API_SECRET=your_test_key_secret
+```
 
-Start the backend server: npm run dev (or node server.js if no dev script)
+Start the backend server:
+```bash
+npm run dev
+# or
+node server.js
+```
 
-Frontend setup:
+### 3. Frontend Setup
 
-Navigate to the frontend folder: cd ../frontend
+Navigate to the frontend folder:
+```bash
+cd ../frontend
+```
 
-Install dependencies: npm install
+Install dependencies:
+```bash
+npm install
+```
 
-Start the frontend: npm start
+Start the frontend:
+```bash
+npm start
+```
 
-Make sure both backend and frontend are running. Update API base URLs if necessary (proxy, CORS, etc.).
+> **Note**: Make sure both backend and frontend are running. Update API base URLs if necessary (proxy, CORS, etc.).
 
-How It Works
+## How It Works
 
-The frontend shows a list of products with a "Pay" button.
+1. **Product Display**: The frontend shows a list of products with a "Pay" button
+2. **Payment Initiation**: On clicking "Pay":
+   - Frontend retrieves the Razorpay API key from the backend
+   - Sends the payment amount to backend endpoint `/api/v1/payment/process` to create an order
+   - Receives order details from the backend
+   - Opens the Razorpay checkout widget with the key, order ID, and other details
+3. **Payment Processing**: After payment, Razorpay sends a signature back
+4. **Verification**: The backend verifies the signature using the secret key
+5. **Success/Failure**: 
+   - If valid: User is redirected to success page with payment reference ID
+   - If invalid: Backend returns an error
 
-On clicking "Pay":
+## API Endpoints
 
-The frontend retrieves the Razorpay API key from the backend.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/v1/payment/process` | Creates a Razorpay order |
+| `GET` | `/api/v1/getKey` | Returns Razorpay API key to frontend |
+| `POST` | `/api/v1/paymentVerification` | Verifies payment signature and redirects on success |
 
-Sends the payment amount to the backend endpoint /api/v1/payment/process to create an order.
+## Getting Razorpay API Keys
 
-Receives the order details from the backend.
+1. Sign up or log in to the [Razorpay Dashboard](https://razorpay.com/)
+2. Switch to **Test Mode**
+3. Navigate to **Settings** → **API Keys**
+4. Generate your **API Key ID** and **API Secret**
+5. Add these credentials to `backend/config/config.env`
 
-Opens the Razorpay checkout widget with the key, order ID, and other details.
+## Results
 
-After payment, Razorpay sends a signature back.
+-  Products are displayed on the frontend with images, titles, and prices
+-  Clicking "Pay" opens the Razorpay checkout window
+-  Payment completion triggers signature verification (in test mode)
+-  Successful verification redirects users to payment success page with reference ID
 
-The backend verifies the signature using the secret key.
+## Possible Improvements / Next Steps
 
-If valid, the user is redirected to a success page with a payment reference ID.
+- [ ] **Error Handling**: Improve error handling and user feedback for failed payments
+- [ ] **UI/UX Enhancement**: Better frontend experience and design
+- [ ] **Database Integration**: Store orders and payment data for persistence
+- [ ] **Testing**: Add unit and integration tests
+- [ ] **Environment Configuration**: Different configurations for development and production
+- [ ] **Logging**: Implement comprehensive logging system
+- [ ] **Webhooks**: Add webhook handling for payment status updates
+- [ ] **Authentication**: User authentication and order history
 
-If invalid, the backend returns an error.
 
-API Endpoints
-
-POST /api/v1/payment/process – Creates a Razorpay order.
-
-GET /api/v1/getKey – Returns Razorpay API key to frontend.
-
-POST /api/v1/paymentVerification – Verifies payment signature and redirects on success.
-
-Getting Razorpay API Keys
-
-Sign up or log in to the Razorpay Dashboard (https://razorpay.com/
-).
-
-Switch to Test Mode.
-
-Generate your API Key ID and API Secret.
-
-Add these credentials to backend/config/config.env.
-
-Results
-
-Products are displayed on the frontend with images, titles, and prices.
-
-Clicking "Pay" opens the Razorpay checkout window.
-
-After completing payment (in test mode), the signature is verified.
-
-On successful verification, users are redirected to a payment success page with a reference ID.
-
-If verification fails, an error status (like 404) is returned.
-
-Possible Improvements / Next Steps
-
-Improve error handling and user feedback for failed payments.
-
-Enhance UI/UX for better frontend experience.
-
-Store orders and payment data in a database for persistence.
-
-Add unit and integration tests.
-
-Add different configurations for development and production environments.
+**Happy Coding!** 🎉
