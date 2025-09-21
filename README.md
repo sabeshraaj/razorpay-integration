@@ -139,14 +139,14 @@ npm start
 
 ## Possible Improvements / Next Steps
 
-- [ ] **Error Handling**: Improve error handling and user feedback for failed payments
-- [ ] **UI/UX Enhancement**: Better frontend experience and design
-- [ ] **Database Integration**: Store orders and payment data for persistence
-- [ ] **Testing**: Add unit and integration tests
-- [ ] **Environment Configuration**: Different configurations for development and production
-- [ ] **Logging**: Implement comprehensive logging system
-- [ ] **Webhooks**: Add webhook handling for payment status updates
-- [ ] **Authentication**: User authentication and order history
+- **Error Handling**: Improve error handling and user feedback for failed payments
+- **UI/UX Enhancement**: Better frontend experience and design
+- **Database Integration**: Store orders and payment data for persistence
+- **Testing**: Add unit and integration tests
+- **Environment Configuration**: Different configurations for development and production
+- **Logging**: Implement comprehensive logging system
+- **Webhooks**: Add webhook handling for payment status updates
+- **Authentication**: User authentication and order history
 
 
 **Happy Coding!** 🎉
