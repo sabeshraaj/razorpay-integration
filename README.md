@@ -149,4 +149,4 @@ npm start
 - **Authentication**: User authentication and order history
 
 
-**Happy Coding!** 🎉
+**Happy Coding!**
